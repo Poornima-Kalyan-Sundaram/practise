@@ -53,24 +53,29 @@ int main()
 	int j=0;i=0;
 	while(i<len1)
 	{
-		while(str[i]==substr[j])
+		if(str[i]==substr[j])
 		{
-			cout<<"loop";
+			i++;		
 			j++;
-			i++;
 			if(j==len)
 			{
-				cout<<"hi "<<j<<endl;
+				cout<<"hi"<<endl;
 				break;
 			}
 
 		}
-		if(prefix[j]>0)
+		else
 		{
-			//shift your substring
-			j-=prefix[j];	
+			if(prefix[j]>0)
+			{
+				//shift your substring
+				j-=prefix[j];
+				
+	
+			}
+			else
+			i++;
 		}
-		i++;
 	}
 	return 0;
 }

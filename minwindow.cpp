@@ -1,0 +1,22 @@
+#include<iostream>
+#include<stdio.h>
+using namespace std;
+
+int window_elements[4];
+int a[10];
+
+int main()
+{
+	int num_window_elements;
+	cin>>num_window_elements;
+
+	for(int i=0;i<num_window_elements;i++)
+	cin>>window_elements[i];
+	
+	int size;
+	for(int i=0;i<size;i++)
+	cin>>a[i];
+	
+	
+	return 0;
+}

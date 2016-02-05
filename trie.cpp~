@@ -1,0 +1,28 @@
+//trie
+#include<stdio.h>
+#include<iostream>
+using namespace std;
+
+struct node
+{
+	int data;
+	node*link;
+	int num;
+};
+
+void find(char*str)
+{
+	for(int i=0;str[i]!='\0';i++)
+	{
+		if(str[i]!=tmp->data)
+		break;
+		else
+		{
+		}
+	}
+}
+
+int main()
+{
+	return 0;
+}

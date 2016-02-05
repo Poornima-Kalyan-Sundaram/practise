@@ -1,0 +1,139 @@
+//avl tree
+//1.calculate heights ->if two leaves have depth difference of two ->left leaf has more depth->right rortate 										right parent's left kid 
+//								   ->right leaf has more depth->left rotate	
+//									left parent's right kid
+#include<stdio.h>
+#include<stdlib.h>
+#include<iostream>
+using namespace std;
+
+struct node
+{
+	int data;
+	int depth;
+	node*left;
+	node*right;
+}*tmp=NULL,*root=NULL;
+
+//normal binary tree insert
+node* insert(node*ptr,int obj)
+{
+	if(ptr==NULL)
+	{
+		tmp=(node*)malloc(sizeof(struct node));
+		tmp->data=obj;
+		tmp->left=NULL;
+		tmp->right=NULL;
+		tmp->depth=0;
+		ptr=tmp;
+	}	
+	else
+	{
+		if(ptr->data>obj)
+		{
+			ptr->left=insert(ptr->left,obj);
+		}
+		else
+		{
+			ptr->right=insert(ptr->right,obj);
+		}
+	}
+	return ptr;
+}
+int max_depth=0,diff=0;
+
+//dfs traversal of the tree
+void calculate_heights(node*ptr,int d)
+{
+	if(ptr==NULL)
+	{
+		return;
+	}
+	else
+	{
+		ptr->depth=d;
+		if(d>max_depth)
+		max_depth=d;
+		if(ptr->left)
+		calculate_heights(ptr->left,d+1);
+		if(ptr->right)
+		calculate_heights(ptr->right,d+1);
+	}	
+	
+}
+
+bool left_rotate=false;
+bool right_rotate=false;
+//check for left/right rotates and return ptr!=NULL
+node* check_for_rotates(node*ptr,node*parent)
+{
+	if(ptr==NULL)
+	return NULL;
+	else
+	{
+		if(ptr->depth<max_depth)
+		{
+			diff=ptr->depth-max_depth;
+			if(diff==-2)
+			{
+				right_rotate=true;
+				tmp=parent->right;
+
+				return parent->right;	
+			}
+			else if(diff==2)
+			{
+				left_rotate=true;
+				tmp=parent->left;
+				return parent->left;
+			}
+			else
+			{
+				if(ptr->left&&(!left_rotate&&!right_rotate))
+				check_for_rotates(ptr->left,ptr);
+				if(ptr->right&&(!left_rotate&&!right_rotate))
+				check_for_rotates(ptr->right,ptr);			
+			}
+		}
+
+	}
+}
+
+
+int main()
+{
+	root=insert(root,1);
+	insert(root,2);
+	insert(root,3);
+	insert(root,4);
+	insert(root,-1);
+
+	calculate_heights(root,0);
+	check_for_rotates(root,NULL);
+	cout<<max_depth<<left_rotate<<right_rotate<<" "<<tmp->data;
+	return 0;
+}
+/*
+//check for left/right rotates and return ptr!=NULL
+node* check_for_rotates(node*root)
+{
+	st.push(root);
+	root->visited=true;
+	while(!st.empty())
+	{
+		tmp=st.top();
+		st.pop();
+		if(tmp->left)
+		{
+			tmp->left->visited=true;
+			st.push(tmp->left);
+		}
+		if(tmp->right)
+		{
+			tmp->right->visited=true;
+			st.push(tmp->right);
+		}
+	}
+}
+
+*/
